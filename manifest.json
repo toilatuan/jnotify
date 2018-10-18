@@ -1,0 +1,17 @@
+{
+  "name": "Jnotify",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "description": "Sends notification when recive new posts from J2Team Community",
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "permissions": [
+    "https://www.facebook.com/*",
+    "notifications",
+    "storage",
+    "tabs"
+  ]
+}
