@@ -1,5 +1,5 @@
 const GROUP_ID = '364997627165697'
-const TAB_URL = 'https://www.facebook.com/groups/j2team.community/permalink'
+const TAB_URL = `https://www.facebook.com/groups/${GROUP_ID}/permalink`
 
 chrome.notifications.onClicked.addListener(id => {
 	chrome.tabs.create({url: `${TAB_URL}/${id}`})
