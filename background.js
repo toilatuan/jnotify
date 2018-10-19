@@ -1,5 +1,8 @@
+const GROUP_ID = '364997627165697'
+const TAB_URL = 'https://www.facebook.com/groups/j2team.community/permalink'
+
 chrome.notifications.onClicked.addListener(id => {
-	chrome.tabs.create({url: `https://www.facebook.com/groups/j2team.community/permalink/${id}`})
+	chrome.tabs.create({url: `${TAB_URL}/${id}`})
   chrome.notifications.clear(id, () => {})
 })
 
@@ -23,10 +26,10 @@ const postInfo = html => $$(html, '._4-u2.mbm._4mrt._5jmm._5pat._5v3q._4-u8')
 	.map(post => {
 		const id = $(post, 'span.y_f4m4jwr-b span.fsm.fwn.fcg > a._5pcq').href.split('/').slice(-2, -1)[0]
 		const name = $(post, 'span.fwn.fcg a').textContent
-		const time = $(post, 'abbr').getAttribute('title')
+		const timestamp = $(post, 'span.timestampContent').textContent
 		const body = $(post, 'div[data-ad-preview=message]') ? $(post, 'div[data-ad-preview=message]').textContent.replace(/\s+/g, ' ') : ''
 
-		return { name, id, time, body }
+		return { name, id, timestamp, body }
 	})
 
 const savePostId = posts => {
@@ -41,11 +44,10 @@ const checkAndFilterIfExist = posts => new Promise((resolve, reject) => {
 
 		if(newPosts.length > 0) {
 			resolve(newPosts)
-		} else {
-			reject('Không có bài viết mới')
-		}
-
-		savePostId(posts)
+		  savePostId(posts)
+    } else {
+      reject('Không có bài viết mới')
+    }
 	})
 })
 
@@ -54,8 +56,8 @@ const sendNotification = posts => {
 
 	const options = {
 		type: 'basic',
-		title: `${posts[0].name}\n${posts[0].time}`,
-		message: textTruncate(posts[0].body, 70),
+		title: `${posts[0].name} • ${posts[0].timestamp}`,
+		message: textTruncate(posts[0].body, 75),
 		iconUrl: 'icon.jpg'
 	}
 
@@ -64,12 +66,12 @@ const sendNotification = posts => {
 }
 
 const jnotify = () => {
-  loadHTML('https://www.facebook.com/groups/364997627165697/?sorting_setting=CHRONOLOGICAL')
+  loadHTML(`https://www.facebook.com/groups/${GROUP_ID}/?sorting_setting=CHRONOLOGICAL`)
     .then(postInfo)
     .then(checkAndFilterIfExist)
     .then(sendNotification)
     .catch(console.log)
 }
 
-setTimeout(jnotify, 5000)
+setTimeout(jnotify, 3000)
 setInterval(jnotify, 300000)
