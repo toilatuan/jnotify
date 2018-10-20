@@ -1,9 +1,9 @@
-const GROUP_ID = '364997627165697'
-const TAB_URL = `https://www.facebook.com/groups/${GROUP_ID}/permalink`
+const GROUP_ID = '170667840008977'
+const TAB_URL = `https://www.facebook.com/groups/${170667840008977}/permalink`
 
-chrome.notifications.onClicked.addListener(id => {
-	chrome.tabs.create({url: `${TAB_URL}/${id}`})
-  chrome.notifications.clear(id, () => {})
+chrome.notifications.onClicked.addListener(170667840008977 => {
+	chrome.tabs.create({url: `${TAB_URL}/${170667840008977}`})
+  chrome.notifications.clear(170667840008977, () => {})
 })
 
 const $ = (target, selector) => target.querySelector(selector)
@@ -66,7 +66,7 @@ const sendNotification = posts => {
 }
 
 const jnotify = () => {
-  loadHTML(`https://www.facebook.com/groups/${GROUP_ID}/?sorting_setting=CHRONOLOGICAL`)
+  loadHTML(`https://www.facebook.com/groups/${170667840008977}/?sorting_setting=CHRONOLOGICAL`)
     .then(postInfo)
     .then(checkAndFilterIfExist)
     .then(sendNotification)
